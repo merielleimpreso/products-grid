@@ -1,12 +1,15 @@
-function Application() {
-  return <div>
-    <h1>Products Grid</h1>
-    <p>Here you are sure to find a bargain on some of the finest ascii available to purchase. Be sure to peruse our selection of ascii faces in an exciting range of sizes and prices.</p>
+import React from 'react';
+import ReactDOM from 'react-dom';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import {RaisedButton} from 'material-ui';
+import Header from './components/Header';
 
-    <section class="products">
-        ... products go here ...
-    </section>
+function Application() {
+  return <MuiThemeProvider> <div>
+  <Header />
+
   </div>
+  </MuiThemeProvider>
 }
 
 ReactDOM.render(
