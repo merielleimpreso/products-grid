@@ -14,7 +14,7 @@ const header = () => (
   <AppBar>
     <Toolbar>
       <Typography type="title" color="inherit">
-      Products Grid
+        Products Grid
       </Typography>
     </Toolbar>
   </AppBar>
