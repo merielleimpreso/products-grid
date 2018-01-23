@@ -26,23 +26,8 @@ const styles = theme => ({
 });
 
 class ProductGridList extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      products: []
-    }
-  }
 
-  componentDidMount() {
-    fetch('http://localhost:3000/products')
-    .then(response => response.json())
-    .then(responseJSON => {
-      console.log(responseJSON);
-      this.setState({
-        products: responseJSON
-      });
-    });
-  }
+
 
   render() {
     const { classes } = this.props;
@@ -50,7 +35,7 @@ class ProductGridList extends React.Component {
     return <div className={classes.root}>
       <GridList cellHeight={200} cols={GRID_LIST_COL} className={classes.gridList}>
       {
-        this.state.products.map(tile => {
+        this.props.products.map(tile => {
 
           const size = calculateSize(tile.face, {
            font: 'Roboto',
