@@ -15,7 +15,8 @@ const styles = theme => ({
   root: {
     display: 'flex',
     flexWrap: 'wrap',
-    justifyContent: 'space-around',
+    alignItems: 'center',
+    justifyContent: 'center',
     overflow: 'hidden',
     backgroundColor: theme.palette.background.paper,
   },

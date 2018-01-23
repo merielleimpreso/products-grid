@@ -7,9 +7,10 @@ import ProductGridList from './components/ProductGridList';
 
 function Application() {
   return <MuiThemeProvider>
-
+  <div>
+  <Header />
   <ProductGridList />
-
+  </div>
   </MuiThemeProvider>
 }
 
