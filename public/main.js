@@ -5,10 +5,9 @@ import {RaisedButton} from 'material-ui';
 import Header from './components/Header';
 
 function Application() {
-  return <MuiThemeProvider> <div>
+  return <MuiThemeProvider>
   <Header />
 
-  </div>
   </MuiThemeProvider>
 }
 
