@@ -47,7 +47,7 @@ class ProductGridList extends React.Component {
 
           <GridListTileBar
             title={_.formatPriceToDollars(tile.price)}
-            subtitle={<span>{tile.date}</span>}
+            subtitle={<span>{_.formatDateToRelative(tile.date)}</span>}
           />
             <p style={{fontSize: `${tile.size}px`, textAlign:'center'}}>{tile.face}</p>
           </GridListTile>
