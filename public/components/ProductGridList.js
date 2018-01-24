@@ -11,6 +11,8 @@ import InfoIcon from 'material-ui-icons/Info';
 import Subheader from 'material-ui/List/ListSubheader';
 import Typography from 'material-ui/Typography';
 
+import { CircularProgress } from 'material-ui/Progress';
+
 const GRID_LIST_WIDTH = 1000;
 const GRID_LIST_COL = 4;
 const GRID_LIST_CELL = 1000 / 4;
@@ -30,8 +32,6 @@ const styles = theme => ({
   gridListTile: {
     height:'100vh',
     textAlign:'center',
-    verticalAlign:'middle',
-    alignItems:'center',
     backgroundColor:'#ECEFF1',
     padding:15,
   },
@@ -50,8 +50,8 @@ class ProductGridList extends React.Component {
               : productGridListTile(product, classes.gridListTile);
           })
         }
-        <GridListTile key={'footer'} cols={GRID_LIST_COL}>
-          <p>Loading...</p>
+        <GridListTile key={'footer'} cols={GRID_LIST_COL} cellHeight={50} style={{textAlign:'center'}}>
+           <CircularProgress style={{alignSelf:'center'}} />
         </GridListTile>
       </GridList>
     </div>
@@ -80,7 +80,7 @@ const productGridListTile = (product, className) => {
 const productGridListTileWithAds = (product, className) => {
   let tile = productGridListTile(product, className);
   let ads = (
-    <GridListTile key={'ads_'+ product.id} cols={GRID_LIST_COL}>
+    <GridListTile key={'ads_'+ product.id} cols={GRID_LIST_COL} cellHeight={10}>
       <div style={{textAlign:'center'}}><Ads /></div>
     </GridListTile>
   );
