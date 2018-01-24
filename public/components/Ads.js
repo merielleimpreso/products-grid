@@ -7,7 +7,7 @@ const Ads = ({source}) => {
   return (
     <img
       alt={randomNumber}
-      style={{alignSelf: 'center'}}
+      style={{alignSelf: 'center', justifyContent: 'space-around', alignItems:'center'}}
       src={sourceUrl}
     />
   );
