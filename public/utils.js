@@ -14,7 +14,16 @@ export default function addUtils() {
       let date = moment(unformattedDate);
       let days = moment.duration(now.diff(date), 'milliseconds').asDays();
       return (days > 7) ? moment(unformattedDate).format('ll') : moment(unformattedDate).fromNow();
+    },
 
+    getProductsLink(page, sort) {
+      const PAGE_LIMIT = 20;
+      let link = 'http://localhost:3000/products';
+      link += '?_page=' + page + '&_limit=' + PAGE_LIMIT;
+      if (sort != '') {
+        link += '&_sort=' + sort
+      };
+      return link;
     },
 
   });

@@ -13,14 +13,19 @@ class Application extends React.Component {
     super(props);
     this.state = {
       products: [],
-      sortBy: 'none',
+      page: 1,
     };
+    this.query = this.query.bind(this);
     this.sortProductsBy = this.sortProductsBy.bind(this);
   }
 
   componentDidMount() {
     addUtils();
-    fetch('http://localhost:3000/products')
+    this.query(_.getProductsLink(this.state.page, ''));
+  }
+
+  query(link) {
+    fetch(link)
     .then(response => response.json())
     .then(responseJSON => {
       this.setState({
@@ -30,17 +35,14 @@ class Application extends React.Component {
   }
 
   sortProductsBy(sortName) {
-    this.setState({
-      products: _.sortBy(this.state.products, sortName)
-    });
+    this.query(_.getProductsLink(this.state.page, sortName));
   }
 
   render() {
     return <MuiThemeProvider>
     <div>
-    <Header sortProductsBy={this.sortProductsBy} />
-    <ProductGridList products={this.state.products} />
-    <Ads />
+      <Header sortProductsBy={this.sortProductsBy} />
+      <ProductGridList products={this.state.products} />
     </div>
     </MuiThemeProvider>
   }
