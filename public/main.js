@@ -1,3 +1,4 @@
+import _ from 'underscore';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
@@ -13,6 +14,8 @@ class Application extends React.Component {
       products: [],
       sortBy: 'none',
     };
+    this.render = this.render.bind(this);
+    this.sortProductsBy = this.sortProductsBy.bind(this);
   }
 
   componentDidMount() {
@@ -26,13 +29,18 @@ class Application extends React.Component {
     });
   }
 
-  
+  sortProductsBy(sortName) {
+    console.log(sortName);
+    this.setState({
+      products: _.sortBy(this.state.products, sortName)
+    });
+  }
 
   render() {
     return <MuiThemeProvider>
     <div>
-    <Header />
-    <ProductGridList products={this.state.products}/>
+    <Header sortProductsBy={this.sortProductsBy} />
+    <ProductGridList products={this.state.products} />
     <Ads />
     </div>
     </MuiThemeProvider>

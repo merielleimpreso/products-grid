@@ -21,7 +21,8 @@
     "material-ui-icons": "^1.0.0-beta.17",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
-    "typeface-roboto": "0.0.50"
+    "typeface-roboto": "0.0.50",
+    "underscore": "^1.8.3"
   },
   "devDependencies": {
     "babel-core": "^6.26.0",

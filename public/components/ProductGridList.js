@@ -26,9 +26,6 @@ const styles = theme => ({
 });
 
 class ProductGridList extends React.Component {
-
-
-
   render() {
     const { classes } = this.props;
 
@@ -57,7 +54,6 @@ class ProductGridList extends React.Component {
       </GridList>
     </div>
   }
-
 }
 
 export default withStyles(styles)(ProductGridList);

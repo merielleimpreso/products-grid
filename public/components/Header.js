@@ -31,7 +31,8 @@ class Header extends React.Component {
   }
 
   handleChange(event, index, value) {
-    this.setState({ [event.target.name]: event.target.value });
+    //this.setState({ [event.target.name]: event.target.value });
+    this.props.sortProductsBy(event.target.value);
   }
 
   render () {
@@ -58,9 +59,9 @@ class Header extends React.Component {
             <MenuItem value="">
               <em>None</em>
             </MenuItem>
-            <MenuItem value={1}>Size</MenuItem>
-            <MenuItem value={2}>Price</MenuItem>
-            <MenuItem value={3}>ID</MenuItem>
+            <MenuItem value={'size'}>Size</MenuItem>
+            <MenuItem value={'price'}>Price</MenuItem>
+            <MenuItem value={'id'}>ID</MenuItem>
           </Select>
           </FormControl>
         </div>
