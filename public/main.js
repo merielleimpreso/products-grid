@@ -16,6 +16,7 @@ class Application extends React.Component {
       newProducts: [],
       page: 1,
       hasMoreProducts: true,
+      sortBy: '',
     };
     this.query = this.query.bind(this);
     this.sortProductsBy = this.sortProductsBy.bind(this);
@@ -50,6 +51,14 @@ class Application extends React.Component {
       .then(responseJSON => {
         if (JSON.stringify(responseJSON) != this.state.newProducts) {
           if (responseJSON.length != 0) {
+            let newProducts = responseJSON;
+            let randomNumber = Math.floor(Math.random()*1000);
+            let sourceUrl = `http://localhost:3000/ads/?r=${randomNumber}`;
+            newProducts.push({
+              id: 'ads_' + randomNumber,
+              source: sourceUrl
+            });
+
             this.setState({
               newProducts: responseJSON
             });
@@ -95,7 +104,7 @@ class Application extends React.Component {
     return <MuiThemeProvider>
     <div>
       <Header sortProductsBy={this.sortProductsBy} />
-      <ProductGridList products={this.state.products} />
+      <ProductGridList products={this.state.products} hasMoreProducts={this.state.hasMoreProducts} />
     </div>
     </MuiThemeProvider>
   }

@@ -10,8 +10,10 @@ import IconButton from 'material-ui/IconButton';
 import InfoIcon from 'material-ui-icons/Info';
 import Subheader from 'material-ui/List/ListSubheader';
 import Typography from 'material-ui/Typography';
-
 import { CircularProgress } from 'material-ui/Progress';
+
+
+import Footer from './Footer';
 
 const GRID_LIST_WIDTH = 1200;
 const GRID_LIST_COL = 5;
@@ -45,13 +47,13 @@ class ProductGridList extends React.Component {
       <GridList cellHeight={200} cols={GRID_LIST_COL} className={classes.gridList}>
         {
           this.props.products.map((product, index) => {
-            return ((index + 1) % ADS_COUNT == 0)
+            return (product.hasOwnProperty('source'))
               ? productGridListTileWithAds(product, classes.gridListTile)
               : productGridListTile(product, classes.gridListTile);
           })
         }
-        <GridListTile key={'footer'} cols={GRID_LIST_COL} cellHeight={50} style={{textAlign:'center'}}>
-           <CircularProgress style={{alignSelf:'center'}} />
+        <GridListTile key={'footer'} cols={GRID_LIST_COL} cellHeight={80} style={{textAlign:'center'}}>
+           <Footer hasMoreProducts={this.props.hasMoreProducts}/>
         </GridListTile>
       </GridList>
     </div>
@@ -80,11 +82,12 @@ const productGridListTile = (product, className) => {
 const productGridListTileWithAds = (product, className) => {
   let tile = productGridListTile(product, className);
   let ads = (
-    <GridListTile key={'ads_'+ product.id} cols={GRID_LIST_COL} cellHeight={10}>
-      <div style={{textAlign:'center'}}><Ads /></div>
+    <GridListTile key={product.id} cols={GRID_LIST_COL} cellHeight={10}>
+      <div style={{textAlign:'center'}}><Ads source={product.source}/></div>
     </GridListTile>
   );
-  return [tile, ads];
+  return ads;
 }
+
 
 export default withStyles(styles)(ProductGridList);
