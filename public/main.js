@@ -13,10 +13,13 @@ class Application extends React.Component {
     super(props);
     this.state = {
       products: [],
+      newProducts: [],
       page: 1,
+      hasMoreProducts: true,
     };
     this.query = this.query.bind(this);
     this.sortProductsBy = this.sortProductsBy.bind(this);
+    this.handleScroll = this.handleScroll.bind(this);
   }
 
   componentDidMount() {
@@ -29,18 +32,43 @@ class Application extends React.Component {
     window.removeEventListener("scroll", this.handleScroll);
   }
 
-  query(link) {
-    fetch(link)
-    .then(response => response.json())
-    .then(responseJSON => {
+  componentDidUpdate(prevProps, prevState) {
+    if (this.state.page != prevState.page || this.state.sortBy != prevState.sortBy) {
+      this.query(_.getProductsLink(this.state.page, this.state.sortBy));
+    }
+    if (JSON.stringify(this.state.newProducts) != JSON.stringify(prevState.newProducts)) {
       this.setState({
-        products: responseJSON
+        products: _.union(this.state.newProducts, this.state.products)
       });
-    });
+    }
+  }
+
+  query(link) {
+    if (this.state.hasMoreProducts) {
+      fetch(link)
+      .then(response => response.json())
+      .then(responseJSON => {
+        if (JSON.stringify(responseJSON) != this.state.newProducts) {
+          if (responseJSON.length != 0) {
+            this.setState({
+              newProducts: responseJSON
+            });
+          } else {
+            console.log('no more product');
+            this.setState({
+              hasMoreProducts: false
+            });
+          }
+        }
+      });
+    }
   }
 
   sortProductsBy(sortName) {
-    this.query(_.getProductsLink(this.state.page, sortName));
+    this.setState({
+      sortBy: sortName
+    });
+    this.query(_.getProductsLink(1, sortName));
   }
 
   handleScroll() {
@@ -50,9 +78,12 @@ class Application extends React.Component {
     const docHeight = Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight,  html.scrollHeight, html.offsetHeight);
     const windowBottom = windowHeight + window.pageYOffset;
     if (windowBottom >= docHeight) {
-      this.setState({
-        message:'bottom reached'
-      });
+      if (this.state.hasMoreProducts) {
+        this.setState({
+          page: this.state.page + 1
+        });
+        console.log(this.state.page);
+      }
     } else {
       this.setState({
         message:'not at bottom'

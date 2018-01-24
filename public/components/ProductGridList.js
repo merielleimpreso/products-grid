@@ -13,9 +13,9 @@ import Typography from 'material-ui/Typography';
 
 import { CircularProgress } from 'material-ui/Progress';
 
-const GRID_LIST_WIDTH = 1000;
-const GRID_LIST_COL = 4;
-const GRID_LIST_CELL = 1000 / 4;
+const GRID_LIST_WIDTH = 1200;
+const GRID_LIST_COL = 5;
+const GRID_LIST_CELL = 1200 / 5;
 const ADS_COUNT = 20;
 
 const styles = theme => ({
