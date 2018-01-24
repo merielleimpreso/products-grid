@@ -16,6 +16,9 @@ module.exports = {
       }
     ]
   },
+  externals: {
+    moment: 'moment'
+  },
   output: {
     filename: 'transformed.js',
     path: __dirname + '/build'
