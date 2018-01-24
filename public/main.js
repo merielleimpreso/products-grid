@@ -22,6 +22,11 @@ class Application extends React.Component {
   componentDidMount() {
     addUtils();
     this.query(_.getProductsLink(this.state.page, ''));
+    window.addEventListener("scroll", this.handleScroll);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("scroll", this.handleScroll);
   }
 
   query(link) {
@@ -36,6 +41,23 @@ class Application extends React.Component {
 
   sortProductsBy(sortName) {
     this.query(_.getProductsLink(this.state.page, sortName));
+  }
+
+  handleScroll() {
+    const windowHeight = "innerHeight" in window ? window.innerHeight : document.documentElement.offsetHeight;
+    const body = document.body;
+    const html = document.documentElement;
+    const docHeight = Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight,  html.scrollHeight, html.offsetHeight);
+    const windowBottom = windowHeight + window.pageYOffset;
+    if (windowBottom >= docHeight) {
+      this.setState({
+        message:'bottom reached'
+      });
+    } else {
+      this.setState({
+        message:'not at bottom'
+      });
+    }
   }
 
   render() {
