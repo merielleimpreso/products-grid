@@ -1,3 +1,5 @@
+import _ from 'underscore';
+
 import React from 'react';
 import calculateSize from 'calculate-size';
 
@@ -44,7 +46,7 @@ class ProductGridList extends React.Component {
           return <GridListTile key={tile.id} cols={colSize}>
 
           <GridListTileBar
-            title={tile.price}
+            title={_.formatPriceToDollars(tile.price)}
             subtitle={<span>{tile.date}</span>}
           />
             <p style={{fontSize: `${tile.size}px`, textAlign:'center'}}>{tile.face}</p>
