@@ -59,7 +59,6 @@ class Header extends React.Component {
               <InputLabel htmlFor="age-simple">Sort by</InputLabel>
               <Select value={this.state.sortBy}
                 onChange={this.handleChange}
-                style={{textAlign:'center'}}
                 inputProps={{
                   name: 'sortBy',
                   id: 'sortBy-simple',

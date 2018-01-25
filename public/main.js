@@ -15,7 +15,7 @@ const theme = createMuiTheme({
       dark: '#81D4FA',
       contrastText: '#1A237E',
     },
-  },
+  }
 });
 
 class Application extends React.Component {
