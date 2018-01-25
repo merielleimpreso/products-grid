@@ -14,9 +14,9 @@ const theme = createMuiTheme({
   palette: {
     primary: {
       light: '#757ce8',
-      main: '#3f50b5',
-      dark: '#002884',
-      contrastText: '#fff',
+      main: '#B3E5FC',
+      dark: '#81D4FA',
+      contrastText: '#1A237E',
     },
   },
 });
@@ -30,6 +30,7 @@ class Application extends React.Component {
       page: 1,
       hasMoreProducts: true,
       sortBy: '',
+      allowFetch: true,
     };
     this.query = this.query.bind(this);
     this.sortProductsBy = this.sortProductsBy.bind(this);
@@ -58,7 +59,10 @@ class Application extends React.Component {
   }
 
   query(link) {
-    if (this.state.hasMoreProducts) {
+    if (this.state.hasMoreProducts && this.state.allowFetch) {
+      this.setState ({
+        allowFetch: false
+      });
       fetch(link)
       .then(response => response.json())
       .then(responseJSON => {
@@ -68,15 +72,15 @@ class Application extends React.Component {
             let randomNumber = Math.floor(Math.random()*1000);
             let sourceUrl = `http://localhost:3000/ads/?r=${randomNumber}`;
             newProducts.push({
-              id: 'ads_' + randomNumber,
+              id: Date.now() + Math.random() + '_ads_' + randomNumber,
               source: sourceUrl
             });
 
             this.setState({
-              newProducts: responseJSON
+              newProducts: responseJSON,
+              allowFetch: true
             });
           } else {
-            console.log('no more product');
             this.setState({
               hasMoreProducts: false
             });
@@ -87,14 +91,15 @@ class Application extends React.Component {
   }
 
   sortProductsBy(sortName) {
+    console.log(sortName);
     this.setState({
       products: [],
       newProducts: [],
       page: 1,
       hasMoreProducts: true,
-      sortBy: sortName,
-    });
-    this.query(_.getProductsLink(1, sortName));
+      sortBy: sortName
+    })
+    this.query(_.getProductsLink(this.state.page, this.state.sortBy));
   }
 
   handleScroll() {
@@ -104,7 +109,7 @@ class Application extends React.Component {
     const docHeight = Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight,  html.scrollHeight, html.offsetHeight);
     const windowBottom = windowHeight + window.pageYOffset;
     if (windowBottom >= docHeight) {
-      if (this.state.hasMoreProducts) {
+      if (this.state.hasMoreProducts && this.state.allowFetch) {
         this.setState({
           page: this.state.page + 1
         });

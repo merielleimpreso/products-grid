@@ -1,20 +1,15 @@
 import _ from 'underscore';
+
 import Ads from './Ads';
-
-import React from 'react';
 import calculateSize from 'calculate-size';
-
-import { withStyles } from 'material-ui/styles';
+import { CircularProgress } from 'material-ui/Progress';
+import Footer from './Footer';
 import GridList, { GridListTile, GridListTileBar } from 'material-ui/GridList';
 import IconButton from 'material-ui/IconButton';
-import InfoIcon from 'material-ui-icons/Info';
-import Subheader from 'material-ui/List/ListSubheader';
-import Typography from 'material-ui/Typography';
-import { CircularProgress } from 'material-ui/Progress';
+import React from 'react';
 import StarBorderIcon from 'material-ui-icons/StarBorder';
-
-
-import Footer from './Footer';
+import Typography from 'material-ui/Typography';
+import { withStyles } from 'material-ui/styles';
 
 const GRID_LIST_WIDTH = 1200;
 const GRID_LIST_COL = 5;
@@ -42,6 +37,9 @@ const styles = theme => ({
   icon: {
     color: 'white',
   },
+  textCenter: {
+    textAlign:'center'
+  }
 });
 
 class ProductGridList extends React.Component {
@@ -57,7 +55,7 @@ class ProductGridList extends React.Component {
               : productGridListTile(product, classes.gridListTile);
           })
         }
-        <GridListTile key={'footer'} cols={GRID_LIST_COL} cellheight={80} style={{textAlign:'center'}}>
+        <GridListTile key={'footer'} cols={GRID_LIST_COL} cellheight={80} className={classes.textCenter}>
            <Footer hasMoreProducts={this.props.hasMoreProducts}/>
         </GridListTile>
       </GridList>
@@ -75,7 +73,7 @@ const productGridListTile = (product, className, className1) => {
   let title = <span>{_.formatPriceToDollars(product.price)} <span style={{float:'right'}}>{product.size}px</span></span>
   let subtitle = <span>{product.id} <span style={{float:'right'}}>{_.formatDateToRelative(product.date)}</span></span>
   return (
-    <GridListTile key={product.id} cols={colSize} style={{alignItems:'center'}} title={product.id}>
+    <GridListTile key={product.id + Date.now()} cols={colSize} style={{alignItems:'center'}} title={product.id}>
       <Typography type="body1" color="inherit" className={className} style={{fontSize: `${product.size}px`}}>
         {product.face}
       </Typography>
@@ -90,7 +88,7 @@ const productGridListTile = (product, className, className1) => {
 
 const productGridListTileWithAds = (product, className) => {
   let tile = productGridListTile(product, className);
-  return (
+  let ads = (
     <GridListTile key={product.id} cols={GRID_LIST_COL} cellheight={200}>
       <div style={{textAlign:'center', backgroundColor:'#FFCCBC', height:'100hv'}}>
         <Ads source={product.source}/>
@@ -106,6 +104,7 @@ const productGridListTileWithAds = (product, className) => {
       />
     </GridListTile>
   );
+  return ads;
 }
 
 
