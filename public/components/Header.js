@@ -25,20 +25,18 @@ class Header extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      sortBy: ""
+      sortBy: ''
     }
     this.handleChange = this.handleChange.bind(this);
   }
 
   handleChange(event, index, value) {
-    //this.setState({ [event.target.name]: event.target.value });
+    this.setState({ [event.target.name]: event.target.value });
     this.props.sortProductsBy(event.target.value);
   }
 
   render () {
     const { classes } = this.props;
-    const { anchorEl } = this.state;
-    const open = Boolean(anchorEl);
 
     return <AppBar>
       <Toolbar>
@@ -49,6 +47,7 @@ class Header extends React.Component {
           <FormControl className={classes.formControl}>
             <InputLabel htmlFor="age-simple">Sort by</InputLabel>
             <Select
+            color={'white'}
             value={this.state.sortBy}
             onChange={this.handleChange}
             inputProps={{
@@ -56,9 +55,7 @@ class Header extends React.Component {
               id: 'sortBy-simple',
             }}
           >
-            <MenuItem value="">
-              <em>None</em>
-            </MenuItem>
+            <MenuItem value={''}><em>None</em></MenuItem>
             <MenuItem value={'size'}>Size</MenuItem>
             <MenuItem value={'price'}>Price</MenuItem>
             <MenuItem value={'id'}>ID</MenuItem>

@@ -75,7 +75,11 @@ class Application extends React.Component {
 
   sortProductsBy(sortName) {
     this.setState({
-      sortBy: sortName
+      products: [],
+      newProducts: [],
+      page: 1,
+      hasMoreProducts: true,
+      sortBy: sortName,
     });
     this.query(_.getProductsLink(1, sortName));
   }

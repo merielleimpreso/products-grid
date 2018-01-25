@@ -35,7 +35,6 @@ const styles = theme => ({
     height:'100vh',
     textAlign:'center',
     backgroundColor:'#ECEFF1',
-    padding:15,
   },
 });
 
@@ -66,14 +65,17 @@ const productGridListTile = (product, className) => {
     fontSize: `${product.size}px`
   });
   let colSize = Math.ceil(size.width / GRID_LIST_CELL);
+
+  let title = <span>{_.formatPriceToDollars(product.price)} <span style={{float:'right'}}>{product.size}px</span></span>
+  let subtitle = <span>{product.id} <span style={{float:'right'}}>{_.formatDateToRelative(product.date)}</span></span>
   return (
-    <GridListTile key={product.id} cols={colSize} style={{alignItems:'center'}}>
-        <Typography type="body1" color="inherit" className={className} style={{fontSize: `${product.size}px`}}>
-          {product.face}
-        </Typography>
+    <GridListTile key={product.id} cols={colSize} style={{alignItems:'center'}} title={product.id}>
+      <Typography type="body1" color="inherit" className={className} style={{fontSize: `${product.size}px`}}>
+        {product.face}
+      </Typography>
       <GridListTileBar
-        title={_.formatPriceToDollars(product.price)}
-        subtitle={<span>{_.formatDateToRelative(product.date)}</span>}
+        title={title}
+        subtitle={subtitle}
       />
     </GridListTile>
   );
