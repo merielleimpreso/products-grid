@@ -23,6 +23,7 @@ const ADS_COUNT = 20;
 
 const styles = theme => ({
   root: {
+    marginTop: 100,
     display: 'flex',
     flexWrap: 'wrap',
     justifyContent: 'space-around',
@@ -48,7 +49,7 @@ class ProductGridList extends React.Component {
     const { classes } = this.props;
 
     return <div className={classes.root}>
-      <GridList cellHeight={200} cols={GRID_LIST_COL} className={classes.gridList}>
+      <GridList cellheight={200} cols={GRID_LIST_COL} className={classes.gridList}>
         {
           this.props.products.map((product, index) => {
             return (product.hasOwnProperty('source'))
@@ -56,7 +57,7 @@ class ProductGridList extends React.Component {
               : productGridListTile(product, classes.gridListTile);
           })
         }
-        <GridListTile key={'footer'} cols={GRID_LIST_COL} cellHeight={80} style={{textAlign:'center'}}>
+        <GridListTile key={'footer'} cols={GRID_LIST_COL} cellheight={80} style={{textAlign:'center'}}>
            <Footer hasMoreProducts={this.props.hasMoreProducts}/>
         </GridListTile>
       </GridList>
@@ -89,10 +90,10 @@ const productGridListTile = (product, className, className1) => {
 
 const productGridListTileWithAds = (product, className) => {
   let tile = productGridListTile(product, className);
-  let ads = (
-    <GridListTile key={product.id} cols={GRID_LIST_COL} cellHeight={200}>
+  return (
+    <GridListTile key={product.id} cols={GRID_LIST_COL} cellheight={200}>
       <div style={{textAlign:'center', backgroundColor:'#FFCCBC', height:'100hv'}}>
-      <Ads source={product.source}/>
+        <Ads source={product.source}/>
       </div>
       <GridListTileBar
         title={'A word from our sponsor'}
@@ -101,11 +102,10 @@ const productGridListTileWithAds = (product, className) => {
             <StarBorderIcon />
           </IconButton>
         }
-        actionPosition="center"
+        actionPosition="right"
       />
     </GridListTile>
   );
-  return ads;
 }
 
 

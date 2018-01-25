@@ -8,6 +8,19 @@ import ProductGridList from './components/ProductGridList';
 import Ads from './components/Ads';
 import addUtils from './utils';
 
+import { createMuiTheme } from 'material-ui/styles';
+
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+      light: '#757ce8',
+      main: '#3f50b5',
+      dark: '#002884',
+      contrastText: '#fff',
+    },
+  },
+});
+
 class Application extends React.Component {
   constructor(props) {
     super(props);
@@ -105,7 +118,7 @@ class Application extends React.Component {
   }
 
   render() {
-    return <MuiThemeProvider>
+    return <MuiThemeProvider theme={theme}>
     <div>
       <Header sortProductsBy={this.sortProductsBy} />
       <ProductGridList products={this.state.products} hasMoreProducts={this.state.hasMoreProducts} />
