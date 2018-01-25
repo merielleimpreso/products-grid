@@ -107,5 +107,4 @@ const productGridListTileWithAds = (product, className) => {
   return ads;
 }
 
-
 export default withStyles(styles)(ProductGridList);

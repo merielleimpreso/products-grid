@@ -27,6 +27,7 @@ class Application extends React.Component {
     this.state = {
       products: [],
       newProducts: [],
+      fetchedProducts: [],
       page: 1,
       hasMoreProducts: true,
       sortBy: '',
@@ -53,8 +54,19 @@ class Application extends React.Component {
     }
     if (JSON.stringify(this.state.newProducts) != JSON.stringify(prevState.newProducts)) {
       this.setState({
-        products: _.union(this.state.newProducts, this.state.products)
+        fetchedProducts: _.union(this.state.newProducts, this.state.fetchedProducts)
       });
+      if (this.state.page == 1) {
+        this.setState({
+          products: _.union(this.state.newProducts, this.state.product)
+        });
+      }
+    }
+    if (this.state.hasMoreProducts && this.state.allowFetch) {
+      this.setState({
+        page: this.state.page + 1
+      });
+      console.log(this.state.page);
     }
   }
 
@@ -75,14 +87,14 @@ class Application extends React.Component {
               id: Date.now() + Math.random() + '_ads_' + randomNumber,
               source: sourceUrl
             });
-
             this.setState({
               newProducts: responseJSON,
               allowFetch: true
             });
           } else {
             this.setState({
-              hasMoreProducts: false
+              hasMoreProducts: false,
+              allowFetch: false,
             });
           }
         }
@@ -93,7 +105,9 @@ class Application extends React.Component {
   sortProductsBy(sortName) {
     console.log(sortName);
     this.setState({
+      allowFetch: true,
       products: [],
+      fetchedProducts:[],
       newProducts: [],
       page: 1,
       hasMoreProducts: true,
@@ -108,13 +122,11 @@ class Application extends React.Component {
     const html = document.documentElement;
     const docHeight = Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight,  html.scrollHeight, html.offsetHeight);
     const windowBottom = windowHeight + window.pageYOffset;
+
     if (windowBottom >= docHeight) {
-      if (this.state.hasMoreProducts && this.state.allowFetch) {
-        this.setState({
-          page: this.state.page + 1
-        });
-        console.log(this.state.page);
-      }
+      this.setState({
+        products: this.state.fetchedProducts,
+      });
     } else {
       this.setState({
         message:'not at bottom'
