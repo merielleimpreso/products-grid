@@ -11,6 +11,7 @@ import InfoIcon from 'material-ui-icons/Info';
 import Subheader from 'material-ui/List/ListSubheader';
 import Typography from 'material-ui/Typography';
 import { CircularProgress } from 'material-ui/Progress';
+import StarBorderIcon from 'material-ui-icons/StarBorder';
 
 
 import Footer from './Footer';
@@ -35,6 +36,10 @@ const styles = theme => ({
     height:'100vh',
     textAlign:'center',
     backgroundColor:'#ECEFF1',
+    paddingTop: 20,
+  },
+  icon: {
+    color: 'white',
   },
 });
 
@@ -59,7 +64,7 @@ class ProductGridList extends React.Component {
   }
 }
 
-const productGridListTile = (product, className) => {
+const productGridListTile = (product, className, className1) => {
   let size = calculateSize(product.face, {
     font: 'Roboto',
     fontSize: `${product.size}px`
@@ -76,6 +81,7 @@ const productGridListTile = (product, className) => {
       <GridListTileBar
         title={title}
         subtitle={subtitle}
+        style={className1}
       />
     </GridListTile>
   );
@@ -84,8 +90,19 @@ const productGridListTile = (product, className) => {
 const productGridListTileWithAds = (product, className) => {
   let tile = productGridListTile(product, className);
   let ads = (
-    <GridListTile key={product.id} cols={GRID_LIST_COL} cellHeight={10}>
-      <div style={{textAlign:'center'}}><Ads source={product.source}/></div>
+    <GridListTile key={product.id} cols={GRID_LIST_COL} cellHeight={200}>
+      <div style={{textAlign:'center', backgroundColor:'#FFCCBC', height:'100hv'}}>
+      <Ads source={product.source}/>
+      </div>
+      <GridListTileBar
+        title={'A word from our sponsor'}
+        actionIcon={
+          <IconButton style={{color: 'white'}}>
+            <StarBorderIcon />
+          </IconButton>
+        }
+        actionPosition="center"
+      />
     </GridListTile>
   );
   return ads;
